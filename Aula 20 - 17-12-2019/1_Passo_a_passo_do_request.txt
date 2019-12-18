@@ -1,0 +1,18 @@
+1- Requisição é enviada ao servidor para ListarServlet
+
+2- ListarServlet utiliza a classe UsuarioDAO para fazer uma busca no banco de dados (e fica aguardando a resposta da UsuarioDAO...)
+
+3- UsuarioDAO faz efetivamente a busca no banco de dados (aqui que realmente acontece a conexão);
+
+4- UsuarioDAO recebe a resposta do banco de dados com todas as linhas da busca e constrói um ArrayList com essas linhas (ou seja, cada uma das linhas é um usuário que será armazenado no ArrayList);
+Depois, UsuarioDAO envia esse ArrayList de usuários para a ListarServlet (que estava aguardando uma resposta no item 2)
+
+5- ListarServlet recebe o ArrayList de usuários como resposta de UsuarioDAO 
+
+6- ListarServlet cria um atributo com o nome "listaUsuarios" no request e coloca o ArrayList de usuários como valor nesse atributo
+
+7- ListarServlet encaminha o request para "listar.jsp" usando o RequestDispatcher
+
+8- "listar.jsp" gera o arquivo HTML fazendo uso do atributo "listaUsuarios" do request (para poder gerar a tabela com as informações de todos usuários)
+
+9- A página HTML gerada pela "listar.jsp" é enviada de volta como resposta da requisição (isto é, é enviada para o cliente)
