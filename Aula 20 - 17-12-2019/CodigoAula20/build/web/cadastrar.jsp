@@ -1,9 +1,3 @@
-<%-- 
-    Document   : cadastrar
-    Created on : 17/12/2019, 20:18:43
-    Author     : Professor
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
