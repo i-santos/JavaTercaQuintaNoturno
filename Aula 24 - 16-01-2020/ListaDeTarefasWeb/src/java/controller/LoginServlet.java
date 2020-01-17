@@ -1,26 +1,44 @@
 package controller;
 
+import dao.UsuarioDAO;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import model.Usuario;
 
-@WebServlet(name = "HomeServlet", urlPatterns = {"/home"})
-public class HomeServlet extends HttpServlet {
+@WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
+public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        request.getRequestDispatcher("WEB-INF/home.jsp").forward(request, response);
-        
+
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        String email = request.getParameter("email");
+        String senha = request.getParameter("senha");
+        
+        Usuario u = UsuarioDAO.buscarPorEmail(email);
+        
+        if (u == null || !u.getSenha().equals(senha)) {
+            // Não existe esse usuário
+            request.setAttribute("erro", "E-mail/senha inválidos");
+        } else {
+            // Login feito com sucesso            
+            HttpSession session = request.getSession();
+            
+            session.setAttribute("usuarioLogado", u);
+            
+            response.sendRedirect("home");
+        }
         
     }
 
